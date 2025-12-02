@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urgence Froid - DEPANN'FROID x Sofitel Moorea</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .urgence-badge {
+            background: #ff3b3b;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            margin-top: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .form-section {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .required {
+            color: #ff3b3b;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .radio-option {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .radio-option input[type="radio"] {
+            display: none;
+        }
+        
+        .radio-option label {
+            display: block;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: normal;
+        }
+        
+        .radio-option input[type="radio"]:checked + label {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            font-weight: 600;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .checkbox-option:hover {
+            background: #f8f9fa;
+        }
+        
+        .checkbox-option input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        .info-box p {
+            color: #2c3e50;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧊 URGENCE FROID</h1>
+            <p>Sofitel Moorea Ia Ora Beach Resort</p>
+            <div class="urgence-badge">⚡ INTERVENTION PRIORITAIRE</div>
+        </div>
+        
+        <div class="form-section" id="formSection">
+            <div class="info-box">
+                <p><strong>📱 Pourquoi ce formulaire ?</strong><br>
+                En fournissant ces informations précises, vous permettez à Lionel de DEPANN'FROID de diagnostiquer à distance et d'arriver préparé avec les pièces et outils nécessaires. Cela réduit le temps d'intervention et préserve la chaîne du froid.</p>
+            </div>
+            
+            <form id="urgenceForm">
+                <!-- Identification -->
+                <div class="form-group">
+                    <label>Votre Nom <span class="required">*</span></label>
+                    <input type="text" name="nom" required placeholder="Ex: Jean Dupont">
+                </div>
+                
+                <div class="form-group">
+                    <label>Service / Département <span class="required">*</span></label>
+                    <select name="service" required>
+                        <option value="">-- Sélectionnez --</option>
+                        <option value="Cuisine / F&B">Cuisine / F&B</option>
+                        <option value="Bar / Poolside">Bar / Poolside</option>
+                        <option value="Housekeeping">Housekeeping</option>
+                        <option value="Maintenance">Maintenance</option>
+                        <option value="Réception">Réception</option>
+                        <option value="SPA">SPA</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Téléphone Direct <span class="required">*</span></label>
+                    <input type="tel" name="telephone" required placeholder="Ex: 89 XX XX XX">
+                </div>
+                
+                <!-- Type d'équipement -->
+                <div class="form-group">
+                    <label>Type d'Équipement en Panne <span class="required">*</span></label>
+                    <select name="equipement" required id="equipementSelect">
+                        <option value="">-- Sélectionnez --</option>
+                        <option value="Chambre froide positive">Chambre froide positive (0 à +10°C)</option>
+                        <option value="Chambre froide négative">Chambre froide négative (-18 à -25°C)</option>
+                        <option value="Vitrine réfrigérée">Vitrine réfrigérée</option>
+                        <option value="Congélateur">Congélateur</option>
+                        <option value="Réfrigérateur">Réfrigérateur</option>
+                        <option value="Groupe froid">Groupe froid / Unité de condensation</option>
+                        <option value="Climatisation">Climatisation</option>
+                        <option value="Machine à glace">Machine à glace</option>
+                        <option value="Autre">Autre (précisez)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="autreEquipement" style="display:none;">
+                    <label>Précisez l'équipement</label>
+                    <input type="text" name="autre_equipement" placeholder="Décrivez l'équipement">
+                </div>
+                
+                <div class="form-group">
+                    <label>Localisation Précise de l'Équipement <span class="required">*</span></label>
+                    <input type="text" name="localisation" required placeholder="Ex: Cuisine principale, près du four">
+                </div>
+                
+                <!-- Niveau d'urgence -->
+                <div class="form-group">
+                    <label>Niveau d'Urgence <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="urgence" value="CRITIQUE" id="urgence1" required>
+                            <label for="urgence1">🔴 CRITIQUE<br><small>Immédiat</small></label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="urgence" value="URGENT" id="urgence2">
+                            <label for="urgence2">🟠 URGENT<br><small>< 2h</small></label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="urgence" value="NORMAL" id="urgence3">
+                            <label for="urgence3">🟢 NORMAL<br><small>< 24h</small></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Symptômes -->
+                <div class="form-group">
+                    <label>Symptômes Observés <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="symptomes" value="Ne refroidit plus" id="symp1">
+                            <label for="symp1">❄️ Ne refroidit plus / Température monte</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="symptomes" value="Bruit anormal" id="symp2">
+                            <label for="symp2">🔊 Bruit anormal / vibrations</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="symptomes" value="Fuite" id="symp3">
+                            <label for="symp3">💧 Fuite d'eau ou de fluide</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="symptomes" value="Givre excessif" id="symp4">
+                            <label for="symp4">🧊 Givre excessif / glace</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="symptomes" value="Ne démarre pas" id="symp5">
+                            <label for="symp5">⚠️ Ne démarre pas / s'arrête</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="symptomes" value="Alarme" id="symp6">
+                            <label for="symp6">🚨 Alarme / voyant d'erreur</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Température actuelle -->
+                <div class="form-group">
+                    <label>Température Actuelle de l'Équipement</label>
+                    <input type="text" name="temperature" placeholder="Ex: +8°C ou lecture affichée">
+                </div>
+                
+                <!-- Impact opérationnel -->
+                <div class="form-group">
+                    <label>Impact sur l'Opération <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="impact" value="Service arrêté" id="impact1" required>
+                            <label for="impact1">🛑 Service<br>Arrêté</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="impact" value="Risque produits" id="impact2">
+                            <label for="impact2">⚠️ Risque<br>Produits</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="impact" value="Gêne limitée" id="impact3">
+                            <label for="impact3">⚡ Gêne<br>Limitée</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Détails supplémentaires -->
+                <div class="form-group">
+                    <label>Détails Supplémentaires / Contexte</label>
+                    <textarea name="details" placeholder="Ex: Panne survenue après coupure électrique, équipement qui faisait un bruit étrange depuis hier, denrées de valeur à l'intérieur, etc."></textarea>
+                </div>
+                
+                <!-- Photos -->
+                <div class="form-group">
+                    <label>Photos (Optionnel mais Recommandé)</label>
+                    <input type="file" name="photos" accept="image/*" multiple>
+                    <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">
+                        Prendre des photos de: l'affichage, les voyants, l'intérieur si possible
+                    </small>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    📤 ENVOYER L'ALERTE URGENCE
+                </button>
+            </form>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            <div class="success-icon">✓</div>
+            <h2 style="color: #4CAF50; margin-bottom: 15px;">Alerte Envoyée !</h2>
+            <p style="color: #666; line-height: 1.6;">
+                Lionel a reçu votre demande d'intervention.<br>
+                Il va vous contacter rapidement au numéro indiqué.<br><br>
+                <strong>Merci de maintenir la zone accessible.</strong>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Afficher le champ "Autre équipement" si nécessaire
+        document.getElementById('equipementSelect').addEventListener('change', function() {
+            const autreDiv = document.getElementById('autreEquipement');
+            if (this.value === 'Autre') {
+                autreDiv.style.display = 'block';
+            } else {
+                autreDiv.style.display = 'none';
+            }
+        });
+        
+        // Gestion de la soumission du formulaire
+        document.getElementById('urgenceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Collecte des données
+            const formData = new FormData(this);
+            const data = {};
+            
+            // Conversion des données du formulaire
+            for (let [key, value] of formData.entries()) {
+                if (key === 'symptomes') {
+                    if (!data[key]) data[key] = [];
+                    data[key].push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            // Formatage pour SMS/Email
+            let message = `🚨 URGENCE FROID - SOFITEL MOOREA\n\n`;
+            message += `👤 ${data.nom} - ${data.service}\n`;
+            message += `📞 ${data.telephone}\n\n`;
+            message += `🔧 ÉQUIPEMENT: ${data.equipement}\n`;
+            message += `📍 Localisation: ${data.localisation}\n`;
+            message += `🚦 Urgence: ${data.urgence}\n`;
+            message += `💥 Impact: ${data.impact}\n\n`;
+            message += `❄️ Température: ${data.temperature || 'Non renseignée'}\n\n`;
+            message += `SYMPTÔMES:\n${data.symptomes ? data.symptomes.join(', ') : 'Non renseigné'}\n\n`;
+            message += `📝 DÉTAILS:\n${data.details || 'Aucun'}\n`;
+            
+            // Simulation d'envoi (À REMPLACER par ton intégration réelle)
+            console.log('Données collectées:', data);
+            console.log('Message formaté:', message);
+            
+            // Dans la vraie version, tu enverrais ces données vers:
+            // - Ton email via EmailJS ou équivalent
+            // - Ton téléphone via Twilio SMS
+            // - Google Sheets via Apps Script
+            // - Ton système de ticketing
+            
+            // Exemple d'envoi vers Google Apps Script:
+            /*
+            fetch('TON_URL_GOOGLE_APPS_SCRIPT', {
+                method: 'POST',
+                body: JSON.stringify(data)
+            }).then(response => {
+                // Afficher le message de succès
+                document.getElementById('formSection').classList.add('hide');
+                document.getElementById('successMessage').classList.add('show');
+            });
+            */
+            
+            // Pour la démo, on affiche juste le message de succès
+            document.getElementById('formSection').style.display = 'none';
+            document.getElementById('successMessage').classList.add('show');
+            
+            // Alert pour la démo (RETIRER en production)
+            alert('✅ Alerte envoyée à Lionel!\n\nDonnées:\n' + message);
+        });
+    </script>
+</body>
+</html>
